@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五形Hub · 测测你的体质人格</title>
+    <meta name="description" content="融合五行人格与中医体质的趣味测评，发现你是三国英雄还是红楼梦中人">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- ===== 年龄选择页（统一入口） ===== -->
+        <section id="page-age" class="page active">
+            <div class="wuxing-bg">
+                <div class="wc1"></div><div class="wc2"></div><div class="wc3"></div>
+            </div>
+            <div class="age-box">
+                <div class="age-logo">五形<span>Hub</span></div>
+                <p class="age-tagline">发现你的先天体质人格 · 获取专属防寒方案</p>
+                <div class="age-card">
+                    <p class="age-ask">👋 请选择你的年龄</p>
+                    <div class="age-picker">
+                        <div class="age-display">
+                            <span id="age-value" class="age-value">25</span>
+                            <span class="age-unit">岁</span>
+                        </div>
+                        <input type="range" id="age-slider" class="age-slider" min="1" max="80" value="25">
+                        <div class="age-labels">
+                            <span>1岁</span>
+                            <span>35</span>
+                            <span>80岁</span>
+                        </div>
+                    </div>
+                    <div id="age-mode-hint" class="age-mode-hint">🎮 游戏模式</div>
+                    <button id="btn-age-confirm" class="btn-age-start">
+                        <span>确认，开始测评</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                    </button>
+                    <div class="age-note-wrap">
+                        <p class="age-note-left">✨ 无需登录 · 约4分钟 · 即测即出</p>
+                        <p id="age-saved-hint" class="age-saved-hint"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 游戏入口 ===== -->
+        <section id="page-game" class="page">
+            <div class="game-bg"></div>
+            <div class="entry-card game-card">
+                <div class="ec-badge">🎮 五形Hub</div>
+                <div class="ec-level">Lv.1 新手村</div>
+                <h1 class="ec-title">你是什么体质人格？</h1>
+                <p class="ec-sub">三国英雄 · 红楼梦中人 · 江湖侠客 · 神话人物<br>测测你是哪个经典角色</p>
+                <div class="ec-list">
+                    <div class="ec-item">🧬 寻找你的先天五行</div>
+                    <div class="ec-item">⚔️ 揭示你的隐藏技能</div>
+                    <div class="ec-item">❄️ 解锁你的防寒装备</div>
+                </div>
+                <button id="btn-start-game" class="btn-start">🎲 开始探索</button>
+                <div class="ec-foot">⭐ 25题 · 🏆 5种角色 · ❄️ 专属防寒方案</div>
+            </div>
+        </section>
+
+        <!-- ===== 中医入口 ===== -->
+        <section id="page-tcm" class="page">
+            <div class="tcm-bg"></div>
+            <div class="entry-card tcm-card">
+                <div class="ec-badge tcm-badge">🏛️ 五形Hub</div>
+                <div class="ec-quote">"上工治未病，不治已病"<br><span>——《黄帝内经》</span></div>
+                <h1 class="ec-title">🌿 辨识你的体质人格</h1>
+                <p class="ec-sub">融合五行人格与中医九种体质学<br>发现你的先天类型与专属养生方向</p>
+                <div class="ec-grid">
+                    <span>☯ 五行人格分析</span><span>🫁 体质辨识</span>
+                    <span>🛡️ 防寒方案</span><span>💼 职场解读</span>
+                </div>
+                <button id="btn-start-tcm" class="btn-start tcm-btn">开始体质辨识</button>
+                <div class="ec-foot">约4分钟 · 25道题 · 无需注册</div>
+            </div>
+        </section>
+
+        <!-- ===== 答题页 ===== -->
+        <section id="page-quiz" class="page">
+            <div class="quiz-wrap">
+                <div class="quiz-top">
+                    <div class="quiz-progress">
+                        <div class="qp-track"><div id="qpb-fill" class="qp-fill"></div></div>
+                        <span id="qpb-text" class="qp-text">1/25</span>
+                    </div>
+                    <div id="quiz-category" class="quiz-cat">五行辨识</div>
+                </div>
+                <div class="quiz-body">
+                    <div class="q-container">
+                        <div id="q-number" class="q-num">第 1 题</div>
+                        <div id="q-extra" class="q-extra">剩余 24 题 · 约3分钟</div>
+                        <p id="q-text" class="q-text">加载中...</p>
+                    </div>
+                    <div id="q-options" class="q-options"></div>
+                </div>
+                <div class="quiz-foot"><span class="qf-logo">五形Hub</span><span class="qf-hint">按 1-5 或 A-E 快速选择</span></div>
+            </div>
+        </section>
+
+        <!-- ===== 加载页 ===== -->
+        <section id="page-loading" class="page">
+            <div class="load-box">
+                <div class="load-wx">
+                    <span style="color:#4a7c59">木</span>
+                    <span style="color:#c0392b">火</span>
+                    <span class="load-center" style="color:#b8860b">土</span>
+                    <span style="color:#7a7a8a">金</span>
+                    <span style="color:#2c5f7c">水</span>
+                </div>
+                <h2 id="ld-title" class="ld-title">解析中...</h2>
+                <div class="ld-bar"><div id="ld-fill" class="ld-fill"></div></div>
+                <p id="ld-desc" class="ld-desc">发现你的先天体质人格</p>
+            </div>
+        </section>
+
+        <!-- ===== 结果页 ===== -->
+        <section id="page-result" class="page">
+            <div class="result-box">
+                <div id="res-share" class="res-share hidden"></div>
+                <div id="alert-banner" class="alert-banner hidden"></div>
+
+                <!-- 角色卡 -->
+                <div id="char-card" class="char-card hidden">
+                    <div class="char-portrait">
+                        <div class="char-fig">
+                            <div class="ch-hair"></div><div class="ch-face"></div>
+                            <div class="ch-eyes"></div><div class="ch-mouth"></div>
+                            <div class="ch-pin"></div>
+                        </div>
+                    </div>
+                    <div class="char-info">
+                        <div id="cc-name" class="ch-name">林黛玉</div>
+                        <div id="cc-title" class="ch-title">潇湘妃子</div>
+                        <div id="cc-poem" class="ch-poem"></div>
+                        <div id="cc-tags" class="ch-tags"></div>
+                        <div id="cc-desc" class="ch-desc"></div>
+                    </div>
+                </div>
+
+                <!-- 结果头部 -->
+                <div id="res-badge" class="res-badge"></div>
+                <div class="res-hero">
+                    <div id="res-icon" class="res-icon"></div>
+                    <h1 id="res-name" class="res-name"></h1>
+                    <p id="res-sub" class="res-sub"></p>
+                </div>
+                <div id="res-axes" class="res-axes"></div>
+                <div id="res-tags" class="res-tags"></div>
+
+                <div class="share-bar">
+                    <button class="btn-share" onclick="copyLink()">🔗 复制分享</button>
+                    <button class="btn-share" onclick="copyLink();toast('📱 去微信分享吧')">💬 分享好友</button>
+                    <button class="btn-share" onclick="shareImage()">🖼️ 分享图片</button>
+                    <button class="btn-share" onclick="downloadReport()">📥 下载报告</button>
+                </div>
+
+                <!-- IP形象 -->
+                <div id="char-art-box" class="char-art-box"></div>
+
+                <!-- 卡片 -->
+                <div class="rc"><div class="rc-title">🧬 人格画像</div><p id="res-personality" class="rc-text"></p></div>
+                <div class="rc rc-highlight"><div class="rc-title">🎯 职业方向</div><div id="res-careers" class="career-tags"></div></div>
+                <div class="rc"><div class="rc-title">🤝 团队角色</div><p id="res-team" class="rc-text"></p></div>
+                <div class="rc"><div class="rc-title">🌿 体质分析</div><div id="res-cons" class="rc-text"></div></div>
+                <div class="rc rc-alert" id="btn-view-alert">
+                    <div class="rc-title">❄️ 气温骤降预警</div>
+                    <p style="font-size:0.82rem;color:var(--text3)">查看你所在城市的实时防寒推送 →</p>
+                </div>
+                <div class="rc rc-plan"><div class="rc-title">🛡️ 防寒要点</div><div id="res-plan" class="plan-list"></div></div>
+
+                <!-- AI问答 -->
+                <div class="rc qa-trigger" id="btn-qa">
+                    <div class="rc-title">💬 智能问答</div>
+                    <p style="font-size:0.82rem;color:var(--text3)">问天气、查体质、咨询防寒 →</p>
+                </div>
+                <div id="qa-box" class="qa-box"></div>
+
+                <div class="res-actions">
+                    <button id="btn-detail" class="btn-sec">📋 查看完整报告</button>
+                    <button id="btn-restart" class="btn-out">重新测评</button>
+                </div>
+                <div class="res-foot">五形Hub · 体质人格探索</div>
+            </div>
+        </section>
+
+        <!-- ===== 详细报告 ===== -->
+        <section id="page-detail" class="page">
+            <div class="detail-box">
+                <button id="btn-back" class="btn-back">← 返回结果</button>
+                <div class="dt-hero">
+                    <div id="dt-icon" class="dt-icon"></div>
+                    <h1 id="dt-name" class="dt-name"></h1>
+                    <div class="dt-meta"><span id="dt-code" class="dt-code"></span><span id="dt-arch" class="dt-arch"></span></div>
+                </div>
+                <div class="dt-section"><h2 class="ds-title">一、🧬 人格特质分析</h2><div id="dt-personality"></div></div>
+                <div class="dt-section"><h2 class="ds-title">二、💼 职业能力模型</h2><div id="dt-work"></div></div>
+                <div class="dt-section"><h2 class="ds-title">三、🌿 体质分析</h2><div id="dt-cons"></div></div>
+                <div class="dt-section dt-plan-sec"><h2 class="ds-title">四、🛡️ 防寒方案</h2><div id="dt-plan"></div></div>
+                <div class="dt-section"><h2 class="ds-title">五、📋 养生建议</h2><p id="dt-advice" class="d-text"></p><div id="dt-do" class="dd-box" style="margin-top:1rem"></div></div>
+                <div class="dt-section"><h2 class="ds-title">六、🌱 成长方向</h2><div id="dt-growth" class="growth-list"></div></div>
+                <div class="dt-section"><h2 class="ds-title">七、👤 代表人物</h2><p id="dt-figures" class="d-text"></p></div>
+                <div class="dt-section"><h2 class="ds-title">八、📊 五形总览</h2><div id="dt-grid" class="dt-grid"></div></div>
+
+                <!-- AI问答 -->
+                <div class="dt-section" style="margin-top:1.5rem">
+                    <h2 class="ds-title">💬 五形智能助手</h2>
+                    <div id="detail-qa" class="qa-box"></div>
+                </div>
+
+                <div class="res-foot" style="margin-top:2rem">五形Hub · v1.0</div>
+            </div>
+        </section>
+
+        <!-- ===== 预警页 ===== -->
+        <section id="page-alert" class="page">
+            <div class="detail-box">
+                <button id="btn-back2" class="btn-back">← 返回结果</button>
+                <div class="al-head"><h1 class="al-title">❄️ 气温骤降 · 五形预警</h1><p class="al-desc">根据你的体质类型推送定制化防寒方案</p></div>
+                <div id="al-content" class="al-content"></div>
+                <div class="res-foot">五形Hub · 气温骤降预警系统</div>
+            </div>
+        </section>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/data.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
