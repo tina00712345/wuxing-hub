@@ -81,17 +81,26 @@
         });
     }
 
-    // 开始
-    ['btn-start-game','btn-start-tcm','btn-restart'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('click', start);
-    });
+    // 开始（防御式绑定）
+    function bindStartButtons() {
+        ['btn-start-game','btn-start-tcm','btn-restart'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                // 移除旧绑定再重新绑定，防止重复
+                el.removeEventListener('click', start);
+                el.addEventListener('click', start);
+            }
+        });
+    }
+    bindStartButtons();
+
     function start() {
         state.idx = 0; state.ans = new Array(TOTAL).fill(null); state.result = null; state.shared = false;
-        // 清除保存的结果
         try { localStorage.removeItem('wuxing_result'); } catch(e) {}
         if (window.history?.replaceState) window.history.replaceState(null, '', window.location.pathname);
-        go('quiz'); renderQ(0);
+        // 直接切换到答题页再渲染
+        go('quiz');
+        setTimeout(function() { renderQ(0); }, 100);
     }
 
     // ===== localStorage持久化 =====
@@ -161,7 +170,7 @@
     const LETTERS = ['A','B','C','D','E'];
 
     function renderQ(idx) {
-        const QQ = window.QUESTIONS || QUESTIONS;
+        const QQ = window.QUESTIONS ? window.QUESTIONS : QUESTIONS;
         const q = QQ[idx];
         if (!q) {
             console.error('题目数据未加载', idx);
