@@ -81,28 +81,22 @@
         });
     }
 
-    // 开始（防御式绑定）
     function bindStartButtons() {
-        ['btn-start-game','btn-start-tcm','btn-restart'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                // 移除旧绑定再重新绑定，防止重复
-                el.removeEventListener('click', start);
-                el.addEventListener('click', start);
-            }
+        ["btn-start-game","btn-start-tcm","btn-restart"].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.onclick = function() { start(); return false; };
         });
     }
     bindStartButtons();
+    setTimeout(bindStartButtons, 300);
 
     function start() {
         state.idx = 0; state.ans = new Array(TOTAL).fill(null); state.result = null; state.shared = false;
-        try { localStorage.removeItem('wuxing_result'); } catch(e) {}
-        if (window.history?.replaceState) window.history.replaceState(null, '', window.location.pathname);
-        // 直接切换到答题页再渲染
-        go('quiz');
-        setTimeout(function() { renderQ(0); }, 100);
+        try { localStorage.removeItem("wuxing_result"); } catch(e) {}
+        if (window.history && window.history.replaceState) window.history.replaceState(null, "", window.location.pathname);
+        go("quiz");
+        setTimeout(function() { renderQ(0); }, 150);
     }
-
     // ===== localStorage持久化 =====
     function saveResult(r) {
         try {
