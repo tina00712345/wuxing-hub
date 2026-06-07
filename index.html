@@ -244,11 +244,12 @@
     <div id="toast" class="toast"></div>
     <!-- 脚本：jsDelivr CDN（中国大陆加速）+ 本地备用 -->
     <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/data.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/characters.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/alerts.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/app.js"></script>
     <script>
     /* CDN备用加载：如果CDN脚本失败，重新加载本地版本 */
-    window._scriptsFallback = ['js/data.js','js/alerts.js','js/app.js'];
+    window._scriptsFallback = ['js/data.js','js/characters.js','js/alerts.js','js/app.js'];
     window._scriptFailed = false;
     window.addEventListener('error', function(e) {
         if (e.target && e.target.tagName === 'SCRIPT' && e.target.src && e.target.src.indexOf('jsdelivr') > -1) {

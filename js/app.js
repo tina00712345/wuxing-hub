@@ -466,32 +466,24 @@
 
     window.showAlert=function(){go('alert');if(typeof renderAlertMonitor==='function')renderAlertMonitor(state.result);};
 
-    // ===== 角色艺术形象 =====
+    // ===== 角色艺术形象（双风格） =====
     function renderCharacterArt(r) {
         if (!r) return;
         const box = $('#char-art-box');
         if (!box) return;
+        if (!window.getCharacterArt) return;
 
-        const arts = {
-            wood: { bg:'linear-gradient(135deg,#e8f0e4,#d0e4cc)', color:'#4a7c59',
-                    svg:'<svg viewBox="0 0 120 160" width="120" height="160"><ellipse cx="60" cy="50" rx="35" ry="40" fill="#f5e6d0"/><ellipse cx="60" cy="30" rx="38" ry="25" fill="#2a1a0e"/><circle cx="48" cy="48" r="3" fill="#2a1a0e"/><circle cx="72" cy="48" r="3" fill="#2a1a0e"/><path d="M55 55 Q60 62 65 55" stroke="#c99" stroke-width="2" fill="none"/><path d="M50 70 L60 105 L70 70" fill="#4a7c59" opacity=".6"/></svg>' },
-            fire: { bg:'linear-gradient(135deg,#fce8e4,#f8d0c8)', color:'#c0392b',
-                    svg:'<svg viewBox="0 0 120 160" width="120" height="160"><ellipse cx="60" cy="50" rx="32" ry="38" fill="#f0d8c0"/><circle cx="60" cy="28" r="22" fill="#2a1a0e"/><circle cx="50" cy="45" r="2.5" fill="#2a1a0e"/><circle cx="70" cy="45" r="2.5" fill="#2a1a0e"/><path d="M53 52 Q60 60 67 52" stroke="#c99" stroke-width="2" fill="none"/><path d="M35 80 Q60 110 85 80" fill="#c0392b" opacity=".5"/></svg>' },
-            earth: { bg:'linear-gradient(135deg,#f5edd6,#ece0c0)', color:'#b8860b',
-                     svg:'<svg viewBox="0 0 120 160" width="120" height="160"><ellipse cx="60" cy="48" rx="36" ry="38" fill="#f0dcc0"/><circle cx="60" cy="26" r="24" fill="#3a2a1a"/><circle cx="50" cy="44" r="3" fill="#2a1a0e"/><circle cx="70" cy="44" r="3" fill="#2a1a0e"/><path d="M52 52 Q60 62 68 52" stroke="#c99" stroke-width="2.5" fill="none"/><path d="M30 75 Q60 115 90 75" fill="#b8860b" opacity=".45"/></svg>' },
-            metal: { bg:'linear-gradient(135deg,#f0f0f2,#e0e0e8)', color:'#7a7a8a',
-                     svg:'<svg viewBox="0 0 120 160" width="120" height="160"><ellipse cx="60" cy="50" rx="30" ry="36" fill="#f0e8e0"/><circle cx="60" cy="30" r="20" fill="#1a1a2a"/><circle cx="52" cy="48" r="2.5" fill="#1a1a2a"/><circle cx="68" cy="48" r="2.5" fill="#1a1a2a"/><path d="M55 54 Q60 60 65 54" stroke="#c99" stroke-width="1.8" fill="none"/><rect x="48" y="65" width="24" height="28" rx="3" fill="#7a7a8a" opacity=".5"/></svg>' },
-            water: { bg:'linear-gradient(135deg,#e0edf5,#c8dce8)', color:'#2c5f7c',
-                     svg:'<svg viewBox="0 0 120 160" width="120" height="160"><ellipse cx="60" cy="52" rx="34" ry="40" fill="#f0e0d0"/><circle cx="60" cy="32" r="22" fill="#2a1a1a"/><circle cx="50" cy="50" r="2.5" fill="#1a1a1a"/><circle cx="70" cy="50" r="2.5" fill="#1a1a1a"/><path d="M53 56 Q60 64 67 56" stroke="#c99" stroke-width="2" fill="none"/><ellipse cx="60" cy="75" rx="22" ry="28" fill="#2c5f7c" opacity=".35"/></svg>' }
-        };
-        const art = arts[r.primaryElement] || arts.earth;
-        box.innerHTML = '<div class="char-art-panel" style="background:'+art.bg+'">' +
+        const ageTheme = state.ageGroup || 'adult';
+        const art = window.getCharacterArt(r.primaryElement, ageTheme);
+        if (!art) return;
+
+        box.innerHTML = '<div class="char-art-panel char-art-' + ageTheme + '" style="background:'+art.bg+';border-color:'+art.borderColor+'">' +
             '<div class="char-art-svg">'+art.svg+'</div>' +
             '<div class="char-art-info">' +
             '<div class="char-art-element" style="color:'+art.color+'">'+r.icon+' '+r.element+'形人</div>' +
-            '<div class="char-art-name">'+r.character+'</div>' +
+            '<div class="char-art-name" style="color:'+(ageTheme==='young'?'#e8e8f0':'var(--text)')+'">'+r.character+'</div>' +
             '<div class="char-art-title">'+(r.characterTitle||'')+'</div>' +
-            '<div class="char-art-tags">'+(r.traits||[]).slice(0,3).map(t=>'<span style="background:'+art.color+'20;color:'+art.color+';padding:2px 8px;border-radius:10px;font-size:11px">'+t+'</span>').join('')+'</div></div></div>';
+            '<div class="char-art-tags">'+(r.traits||[]).slice(0,3).map(t=>'<span class="char-tag-' + ageTheme + '" style="background:'+art.color+'20;color:'+art.color+';padding:2px 8px;border-radius:10px;font-size:11px">'+t+'</span>').join('')+'</div></div></div>';
     }
 
     // ===== 下载报告 =====

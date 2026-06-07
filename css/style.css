@@ -668,12 +668,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .char-art-box{margin-bottom:.6rem}
 .char-art-panel{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border-radius:var(--radius);border:1px solid rgba(255,255,255,.3)}
 .char-art-svg{flex-shrink:0}
-.char-art-svg svg{display:block}
+.char-art-svg svg{display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,.08))}
 .char-art-info{flex:1}
 .char-art-element{font-size:.85rem;font-weight:700}
 .char-art-name{font-family:var(--font2);font-size:1.3rem;font-weight:900;color:var(--text);margin:.1rem 0}
 .char-art-title{font-size:.75rem;color:var(--text3);margin-bottom:.3rem}
 .char-art-tags{display:flex;gap:.3rem;flex-wrap:wrap}
+
+/* 游戏风 - 角色面板 */
+.char-art-young{border:1px solid rgba(167,139,250,.2)!important;box-shadow:0 2px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.04)}
+.char-art-young .char-art-name{font-family:var(--font);text-shadow:0 0 15px rgba(167,139,250,.2)}
+.char-art-young .char-art-title{color:rgba(255,255,255,.35)}
+.char-art-young .char-art-element{letter-spacing:2px}
+.char-art-young .char-art-svg svg{filter:drop-shadow(0 2px 10px rgba(0,0,0,.2))}
+[data-theme="young"] .char-art-box{margin-top:.2rem}
+
+/* 古风 - 角色面板 */
+.char-art-adult{backdrop-filter:blur(4px)}
 
 /* ===== 答题剩余信息 ===== */
 .q-extra{font-size:.7rem;color:var(--text3);margin-bottom:.5rem;text-align:center}
