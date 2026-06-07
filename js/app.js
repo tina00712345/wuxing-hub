@@ -471,9 +471,21 @@
         if (!r) return;
         const box = $('#char-art-box');
         if (!box) return;
-        if (!window.getCharacterArt) return;
 
         const ageTheme = state.ageGroup || 'adult';
+
+        // 如果characters.js未加载，显示文字版
+        if (!window.getCharacterArt || !window.CHAR_ART) {
+            box.innerHTML = '<div class="char-art-panel" style="background:rgba(128,128,128,.05);border-color:rgba(128,128,128,.1)">' +
+                '<div style="font-size:2.5rem;padding:.5rem">' + (r.icon||'🧬') + '</div>' +
+                '<div class="char-art-info">' +
+                '<div class="char-art-element">' + (r.element||'') + '形人</div>' +
+                '<div class="char-art-name" style="font-size:1.1rem;font-weight:800">' + (r.character||'') + '</div>' +
+                '<div class="char-art-title">' + (r.characterTitle||'') + '</div>' +
+                '</div></div>';
+            return;
+        }
+
         const art = window.getCharacterArt(r.primaryElement, ageTheme);
         if (!art) return;
 

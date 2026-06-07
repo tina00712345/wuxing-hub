@@ -242,32 +242,15 @@
     </div>
 
     <div id="toast" class="toast"></div>
-    <!-- 脚本：jsDelivr CDN（中国大陆加速）+ 本地备用 -->
-    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/data.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/characters.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/alerts.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/app.js"></script>
-    <script>
-    /* CDN备用加载：如果CDN脚本失败，重新加载本地版本 */
-    window._scriptsFallback = ['js/data.js','js/characters.js','js/alerts.js','js/app.js'];
-    window._scriptFailed = false;
-    window.addEventListener('error', function(e) {
-        if (e.target && e.target.tagName === 'SCRIPT' && e.target.src && e.target.src.indexOf('jsdelivr') > -1) {
-            if (!window._scriptFailed) {
-                window._scriptFailed = true;
-                var i = 0;
-                function loadNext() {
-                    if (i >= window._scriptsFallback.length) return;
-                    var s = document.createElement('script');
-                    s.src = window._scriptsFallback[i++];
-                    s.onload = loadNext;
-                    s.onerror = loadNext;
-                    document.body.appendChild(s);
-                }
-                loadNext();
-            }
-        }
-    }, true);
-    </script>
+    <!-- 预加载标记：CDN加载失败时用本地脚本兜底 -->
+    <script>window._scriptsFallback=['js/data.js','js/characters.js','js/alerts.js','js/app.js'];</script>
+    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/data.js"
+      onerror="var i=0;!function n(){if(i>=window._scriptsFallback.length)return;var s=document.createElement('script');s.src=window._scriptsFallback[i++];s.onload=n;s.onerror=n;document.body.appendChild(s)}()"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/characters.js"
+      onerror="var i=0;!function n(){if(i>=window._scriptsFallback.length)return;var s=document.createElement('script');s.src=window._scriptsFallback[i++];s.onload=n;s.onerror=n;document.body.appendChild(s)}()"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/alerts.js"
+      onerror="var i=0;!function n(){if(i>=window._scriptsFallback.length)return;var s=document.createElement('script');s.src=window._scriptsFallback[i++];s.onload=n;s.onerror=n;document.body.appendChild(s)}()"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tina00712345/wuxing-hub@master/js/app.js"
+      onerror="var i=0;!function n(){if(i>=window._scriptsFallback.length)return;var s=document.createElement('script');s.src=window._scriptsFallback[i++];s.onload=n;s.onerror=n;document.body.appendChild(s)}()"></script>
 </body>
 </html>
